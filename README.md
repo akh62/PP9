@@ -117,6 +117,18 @@ Reflection:
 
 * **Explain how each flowchart node maps to your C code.**
 
+
+Der Startknoten mit x entspricht dem Parameter int x in der Funktion flowchart_impl(int x).
+Der Knoten „Initialize result = 1“ entspricht der Zeile int result = 1;.
+Der Knoten „i = 1 to x?“ wird durch die for-Schleife umgesetzt: for (int i = 1; i <= x; i++). Die Schleife läuft von i = 1 bis i = x.
+Der Knoten „i % 2 == 0?“ entspricht der if-Abfrage if (i % 2 == 0). Damit wird geprüft, ob i gerade ist.
+Wenn i gerade ist, wird result += i; ausgeführt. Das entspricht dem Flowchart-Knoten „result += i“.
+Wenn i ungerade ist, wird result *= i; ausgeführt. Das entspricht dem Flowchart-Knoten „result *= i“.
+Der Knoten „result > 1000?“ entspricht der if-Abfrage if (result > 1000).
+Wenn result größer als 1000 ist, wird result -= 100; ausgeführt.
+Der Schritt „Increment i“ wird automatisch durch i++ in der for-Schleife gemacht.
+Der Knoten „Return result“ wird in meinem Programm durch printf("Result: %d\n", result); umgesetzt, weil die Aufgabe verlangt, das Ergebnis auszugeben.
+
 ---
 
 ### Task 3: Code-to-Flowchart
@@ -164,6 +176,59 @@ graph TD
   ...
 ```
 
+## Function 1: transform_complex
+
+```mermaid
+graph TD
+    A([Start]) --> B[result = 1]
+    B --> C[i = 1]
+    C --> D{i <= x?}
+
+    D -- Nein --> E[return result]
+    D -- Ja --> F{i gerade?}
+
+    F -- Ja --> G[result += i]
+    F -- Nein --> H[result *= i]
+
+    G --> I{result > 1000?}
+    H --> I
+
+    I -- Ja --> J[result -= 100]
+    I -- Nein --> K[i++]
+
+    J --> K
+    K --> D
+```
+
+## Function 2: evaluate_sequence
+
+```mermaid
+graph TD
+    A([Start]) --> B[state = 0]
+    B --> C[i = 0]
+    C --> D{i < len?}
+
+    D -- Nein --> M{switch state}
+    D -- Ja --> E{Element negativ?}
+
+    E -- Ja --> F[state = -1]
+    E -- Nein --> G{Element gleich 0?}
+
+    G -- Ja --> H[state = 0]
+    G -- Nein --> I[state = 1]
+
+    F --> J{state == 1?}
+    H --> J
+    I --> J
+
+    J -- Ja --> M
+    J -- Nein --> K[i++]
+
+    K --> D
+
+    M -- case 1 --> N[return true]
+    M -- default --> O[return false]
+```
 ---
 
 **Remember:** Stop after **90 minutes** and record where you stopped.
